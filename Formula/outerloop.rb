@@ -14,7 +14,7 @@ class Outerloop < Formula
     (bin/"outerloop").write <<~SH
       #!/bin/bash
       export PYTHONPATH="#{libexec}${PYTHONPATH:+:$PYTHONPATH}"
-      export INBOX_HOME="${INBOX_HOME:-${XDG_DATA_HOME:-$HOME/.local/share}/outerloop}"
+      export INBOX_HOME="${INBOX_HOME:-$HOME/Library/Application Support/outerloop}"
       exec "#{formula_opt_bin("python@3.13")}/python3" -m inbox "$@"
     SH
   end
@@ -28,7 +28,8 @@ class Outerloop < Formula
 
   def caveats
     <<~EOS
-      State lives in ~/.local/share/outerloop (override with INBOX_HOME).
+      State lives in ~/Library/Application Support/outerloop (override with INBOX_HOME).
+      This is the same dir the .pkg menu-bar app uses, so the two share one store.
       FAKE mode is the default (no external deps). For real mode (INBOX_FAKE=0),
       this machine also needs: claude (logged in), gh (authed), git (identity set).
 
