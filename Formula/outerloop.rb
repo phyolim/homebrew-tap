@@ -1,8 +1,8 @@
 class Outerloop < Formula
   desc "Single-user agent inbox: triage, prioritize, and gate agent-driven work"
   homepage "https://github.com/phyolim/outerloop"
-  url "https://github.com/phyolim/outerloop/archive/refs/tags/v0.1.2.tar.gz"
-  sha256 "6466c1adabc8860e915e6a8bdfd1987c0df1fe4f832c39de80dc3bd7f7cfd404"
+  url "https://github.com/phyolim/outerloop/archive/refs/tags/v0.1.3.tar.gz"
+  sha256 "d71425e8cf776549a7b4c0a4fdbcdfb14794f309551f072523cbf0adcfd26dda"
   license "MIT"
 
   depends_on "python@3.13"
@@ -10,17 +10,17 @@ class Outerloop < Formula
   def install
     # config.py resolves schema.sql/prompts/ui relative to the package's parent,
     # so installing the tree into libexec untouched Just Works.
-    libexec.install "inbox", "schema.sql", "prompts"
+    libexec.install "outerloop", "schema.sql", "prompts"
     (bin/"outerloop").write <<~SH
       #!/bin/bash
       export PYTHONPATH="#{libexec}${PYTHONPATH:+:$PYTHONPATH}"
-      export INBOX_HOME="${INBOX_HOME:-$HOME/Library/Application Support/outerloop}"
-      exec "#{formula_opt_bin("python@3.13")}/python3" -m inbox "$@"
+      export OUTERLOOP_HOME="${OUTERLOOP_HOME:-$HOME/Library/Application Support/outerloop}"
+      exec "#{formula_opt_bin("python@3.13")}/python3" -m outerloop "$@"
     SH
   end
 
   service do
-    run [opt_bin/"outerloop", "coordinator"]
+    run [opt_bin/"outerloop", "hub"]
     keep_alive true
     log_path var/"log/outerloop.log"
     error_log_path var/"log/outerloop.log"
@@ -28,9 +28,9 @@ class Outerloop < Formula
 
   def caveats
     <<~EOS
-      State lives in ~/Library/Application Support/outerloop (override with INBOX_HOME).
+      State lives in ~/Library/Application Support/outerloop (override with OUTERLOOP_HOME).
       This is the same dir the .pkg menu-bar app uses, so the two share one store.
-      FAKE mode is the default (no external deps). For real mode (INBOX_FAKE=0),
+      FAKE mode is the default (no external deps). For real mode (OUTERLOOP_FAKE=0),
       this machine also needs: claude (logged in), gh (authed), git (identity set).
 
       Start the hub:   brew services start outerloop
@@ -43,8 +43,8 @@ class Outerloop < Formula
 
   test do
     assert_equal version.to_s, shell_output("#{bin}/outerloop version").strip
-    ENV["INBOX_HOME"] = testpath/"data"
-    ENV["INBOX_FAKE"] = "1"
+    ENV["OUTERLOOP_HOME"] = testpath/"data"
+    ENV["OUTERLOOP_FAKE"] = "1"
     system bin/"outerloop", "init"
     assert_path_exists testpath/"data/inbox.db"
   end
