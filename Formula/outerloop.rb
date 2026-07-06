@@ -1,8 +1,8 @@
 class Outerloop < Formula
   desc "Single-user agent inbox: triage, prioritize, and gate agent-driven work"
   homepage "https://github.com/phyolim/outerloop"
-  url "https://github.com/phyolim/outerloop/archive/refs/tags/v0.1.3.tar.gz"
-  sha256 "d71425e8cf776549a7b4c0a4fdbcdfb14794f309551f072523cbf0adcfd26dda"
+  url "https://github.com/phyolim/outerloop/archive/refs/tags/v0.1.4.tar.gz"
+  sha256 "66b6440873791af55c9ba56eb0769b348e0441aca38cfeee9dc263178577107a"
   license "MIT"
 
   depends_on "python@3.13"
@@ -20,7 +20,7 @@ class Outerloop < Formula
   end
 
   service do
-    run [opt_bin/"outerloop", "hub"]
+    run [opt_bin/"outerloop", "service"]
     keep_alive true
     log_path var/"log/outerloop.log"
     error_log_path var/"log/outerloop.log"
