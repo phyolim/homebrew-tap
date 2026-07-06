@@ -15,7 +15,7 @@ class Outerloop < Formula
       #!/bin/bash
       export PYTHONPATH="#{libexec}${PYTHONPATH:+:$PYTHONPATH}"
       export OUTERLOOP_HOME="${OUTERLOOP_HOME:-$HOME/Library/Application Support/outerloop}"
-      exec "#{formula_opt_bin("python@3.13")}/python3" -m outerloop "$@"
+      exec "#{formula_opt_bin("python@3.13")}/python3.13" -m outerloop "$@"
     SH
   end
 
