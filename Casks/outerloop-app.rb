@@ -1,6 +1,6 @@
 cask "outerloop-app" do
-  version "0.1.9"
-  sha256 "450ccf98e8479359eabe05824e8ee8d598311eb2329e9affa418a2a36734e66b"
+  version "0.1.11"
+  sha256 "ee31d41a36bc8f8409d0c2a0650a3efd1395f9ab6ec6c9c576e661a26fbc497b"
 
   url "https://github.com/phyolim/outerloop/releases/download/v#{version}/Outerloop-#{version}.zip"
   name "Outerloop"
