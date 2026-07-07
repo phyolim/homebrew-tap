@@ -1,8 +1,8 @@
 class Outerloop < Formula
   desc "Single-user agent inbox: triage, prioritize, and gate agent-driven work"
   homepage "https://github.com/phyolim/outerloop"
-  url "https://github.com/phyolim/outerloop/archive/refs/tags/v0.1.5.tar.gz"
-  sha256 "e025ad416946ad25d7ac38ed33bb8747f4e8492f61ab1cd8016bc44f587ba4c1"
+  url "https://github.com/phyolim/outerloop/releases/download/v0.1.6/outerloop-full-0.1.6.tar.gz"
+  sha256 "ad814189d986a4af156438abd0de0dc605b451c915c83fb13c78713cd1168936"
   license "MIT"
 
   depends_on "python@3.13"
@@ -10,7 +10,7 @@ class Outerloop < Formula
   def install
     # config.py resolves schema.sql/prompts/ui relative to the package's parent,
     # so installing the tree into libexec untouched Just Works.
-    libexec.install "outerloop", "schema.sql", "prompts"
+    libexec.install "outerloop", "schema.sql", "prompts", "ui"
     (bin/"outerloop").write <<~SH
       #!/bin/bash
       export PYTHONPATH="#{libexec}${PYTHONPATH:+:$PYTHONPATH}"
