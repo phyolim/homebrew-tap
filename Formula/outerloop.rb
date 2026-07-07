@@ -15,7 +15,10 @@ class Outerloop < Formula
       #!/bin/bash
       export PYTHONPATH="#{libexec}${PYTHONPATH:+:$PYTHONPATH}"
       export OUTERLOOP_HOME="${OUTERLOOP_HOME:-$HOME/Library/Application Support/outerloop}"
-      exec "#{formula_opt_bin("python@3.13")}/python3.13" -m outerloop "$@"
+      # -P: never prepend the CWD to sys.path — without it, running `outerloop`
+      # from inside a repo checkout silently executes the checkout's package
+      # instead of this install (python -m puts CWD ahead of PYTHONPATH).
+      exec "#{formula_opt_bin("python@3.13")}/python3.13" -P -m outerloop "$@"
     SH
   end
 
@@ -32,7 +35,7 @@ class Outerloop < Formula
       This is the same dir the menu-bar app uses, so the two share one store.
 
       Pick this box's role, then start the daemon:
-        outerloop local role hub|worker     (or the menu-bar app asks on first launch)
+        outerloop local role hub|worker|both  (or the menu-bar app asks on first launch)
         brew services start outerloop
 
       A hub defaults to REAL mode, LAN bind (<hub>.local:8765), and auth on; it
