@@ -1,8 +1,8 @@
 class Outerloop < Formula
   desc "Single-user agent inbox: triage, prioritize, and gate agent-driven work"
   homepage "https://github.com/phyolim/outerloop"
-  url "https://github.com/phyolim/outerloop/releases/download/v0.1.8/outerloop-full-0.1.8.tar.gz"
-  sha256 "6117ace566122cebe43de76afa48ede6c74b7c796d3d80b9f5d8c4638aed1383"
+  url "https://github.com/phyolim/outerloop/releases/download/v0.1.9/outerloop-full-0.1.9.tar.gz"
+  sha256 "6acba3c6d320a70d3a7965177bfd1c8a5226d8c6a202bf8d8aabcc97c40fafb5"
   license "MIT"
 
   depends_on "python@3.13"
@@ -29,12 +29,17 @@ class Outerloop < Formula
   def caveats
     <<~EOS
       State lives in ~/Library/Application Support/outerloop (override with OUTERLOOP_HOME).
-      This is the same dir the .pkg menu-bar app uses, so the two share one store.
-      FAKE mode is the default (no external deps). For real mode (OUTERLOOP_FAKE=0),
-      this machine also needs: claude (logged in), gh (authed), git (identity set).
+      This is the same dir the menu-bar app uses, so the two share one store.
 
-      Start the hub:   brew services start outerloop
-      Quickstart:      outerloop init && outerloop serve   # UI at :8765
+      Pick this box's role, then start the daemon:
+        outerloop local role hub|worker     (or the menu-bar app asks on first launch)
+        brew services start outerloop
+
+      A hub defaults to REAL mode, LAN bind (<hub>.local:8765), and auth on; it
+      self-generates a dashboard password if you never set one — see it with
+      `outerloop status`, change it with `outerloop config ui_token <secret>`.
+      Real mode needs: claude (logged in), gh (authed), git (identity set) — check
+      with `outerloop doctor`. An unconfigured box stays FAKE + loopback-only.
 
       Do NOT also run the .pkg installer on this machine — two hubs/workers would
       double-claim against the same GitHub repos in real mode.

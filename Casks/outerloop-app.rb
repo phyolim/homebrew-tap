@@ -1,6 +1,6 @@
 cask "outerloop-app" do
-  version "0.1.7"
-  sha256 "8eb91333893cf2150a604cb28cdaf23cf95e780453598e6fc91974a37f7b9074"
+  version "0.1.9"
+  sha256 "450ccf98e8479359eabe05824e8ee8d598311eb2329e9affa418a2a36734e66b"
 
   url "https://github.com/phyolim/outerloop/releases/download/v#{version}/Outerloop-#{version}.zip"
   name "Outerloop"
@@ -20,8 +20,10 @@ cask "outerloop-app" do
   ]
 
   caveats <<~EOS
-    The app controls the daemon installed by the outerloop formula:
-      brew services start outerloop   (role from `outerloop local role hub|worker`)
+    On first launch the app asks whether this Mac is the Hub or a Worker.
+    Picking Hub finishes setup by itself: it sets a dashboard password (shown
+    once + copied to the clipboard) and starts the daemon — a real LAN hub with
+    auth on. Forgot the password? `outerloop status` shows it.
     State stays in ~/Library/Application Support/outerloop and is NOT removed on
     uninstall or zap.
   EOS
