@@ -8,7 +8,7 @@ cask "outerloop-app" do
   homepage "https://github.com/phyolim/outerloop"
 
   depends_on formula: "phyolim/tap/outerloop"
-  depends_on macos: ">= :monterey"
+  depends_on macos: :monterey
 
   app "Outerloop.app"
 
