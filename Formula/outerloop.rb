@@ -36,6 +36,15 @@ class Outerloop < Formula
     error_log_path var/"log/outerloop.log"
   end
 
+  def post_install
+    # brew upgrade never restarts a running service, and shelling out to
+    # `brew services restart` from here deadlocks on brew's own lock — so kick
+    # launchd directly. kickstart -k kills + restarts the loaded service (opt
+    # symlink already points at the new keg by post_install time). quiet_system
+    # swallows the failure when the service isn't loaded (e.g. first install).
+    quiet_system "launchctl", "kickstart", "-k", "gui/#{Process.uid}/homebrew.mxcl.outerloop"
+  end
+
   def caveats
     <<~EOS
       State lives in ~/Library/Application Support/outerloop (override with OUTERLOOP_HOME).

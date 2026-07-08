@@ -12,6 +12,14 @@ cask "outerloop-app" do
 
   app "Outerloop.app"
 
+  # Relaunch the app once the new bundle is in place — brew itself never
+  # launches GUI apps (the `uninstall quit:` below stops the old build first).
+  # Also fires on first install, which is what we want: the app's first-launch
+  # flow asks Hub/Worker and finishes setup.
+  postflight do
+    system_command "/usr/bin/open", args: ["#{appdir}/Outerloop.app"]
+  end
+
   # Quit the running menu-bar app on upgrade/uninstall so the swap doesn't leave
   # the stale build running in memory. (Homebrew never auto-relaunches a GUI app;
   # Open-at-Login brings it back next login, or reopen it manually.)
