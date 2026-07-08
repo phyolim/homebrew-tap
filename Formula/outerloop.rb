@@ -11,7 +11,7 @@ class Outerloop < Formula
   def install
     # config.py resolves schema.sql/prompts/ui relative to the package's parent,
     # so installing the tree into libexec untouched Just Works.
-    libexec.install "outerloop", "schema.sql", "prompts", "ui"
+    libexec.install "outerloop", "schema.sql", "ui"
     (bin/"outerloop").write <<~SH
       #!/bin/bash
       export PYTHONPATH="#{libexec}${PYTHONPATH:+:$PYTHONPATH}"
