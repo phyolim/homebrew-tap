@@ -1,8 +1,8 @@
 class Outerloop < Formula
   desc "Single-user agent inbox: triage, prioritize, and gate agent-driven work"
   homepage "https://github.com/phyolim/outerloop"
-  url "https://github.com/phyolim/outerloop/releases/download/v0.2.0/outerloop-full-0.2.0.tar.gz"
-  sha256 "3f0fc8f1f8eca30cafb1eabec73e003c7139841a9a997f6cc7df7d82054f5c91"
+  url "https://github.com/phyolim/outerloop/releases/download/v0.3.0/outerloop-full-0.3.0.tar.gz"
+  sha256 "1b21c7a0ff0a0faf609bf33cb60a96748336fda2b341f3c8112f3b3b5842dd44"
   license "MIT"
 
   depends_on "python@3.13"
