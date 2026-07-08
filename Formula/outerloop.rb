@@ -5,6 +5,7 @@ class Outerloop < Formula
   sha256 "44fe2e15b493aaa0dfdbbee80c073b94e4902a7cb18705d9d7fc9e21d4ae77f4"
   license "MIT"
 
+  depends_on "gh" # real mode shells `gh` for clone/PR/merge; guarantee it's present
   depends_on "python@3.13"
 
   def install
@@ -25,6 +26,12 @@ class Outerloop < Formula
   service do
     run [opt_bin/"outerloop", "service"]
     keep_alive true
+    # launchd's default PATH is /usr/bin:/bin:/usr/sbin:/sbin — no /opt/homebrew/bin,
+    # so a brew-installed gh (or anything else) is invisible to the service without
+    # this. std_service_path_env prepends the brew prefix. (claude still needs the
+    # app-side resolution: it self-installs to a per-user ~/.local/bin no formula
+    # can know about.)
+    environment_variables PATH: std_service_path_env
     log_path var/"log/outerloop.log"
     error_log_path var/"log/outerloop.log"
   end
