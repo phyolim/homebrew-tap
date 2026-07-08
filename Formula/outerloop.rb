@@ -1,8 +1,8 @@
 class Outerloop < Formula
   desc "Single-user agent inbox: triage, prioritize, and gate agent-driven work"
   homepage "https://github.com/phyolim/outerloop"
-  url "https://github.com/phyolim/outerloop/releases/download/v0.3.8/outerloop-full-0.3.8.tar.gz"
-  sha256 "37d57d7c18bd3cc1a8aba79fe292de537ddc1e1a2c9ffc4340d5dd20691106a9"
+  url "https://github.com/phyolim/outerloop/releases/download/v0.3.9/outerloop-full-0.3.9.tar.gz"
+  sha256 "d641af40357d64efde1393312af793d4ca90e478981d1d75635d1b3a600842e4"
   license "MIT"
 
   depends_on "gh" # real mode shells `gh` for clone/PR/merge; guarantee it's present
