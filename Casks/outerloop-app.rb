@@ -12,6 +12,11 @@ cask "outerloop-app" do
 
   app "Outerloop.app"
 
+  # Quit the running menu-bar app on upgrade/uninstall so the swap doesn't leave
+  # the stale build running in memory. (Homebrew never auto-relaunches a GUI app;
+  # Open-at-Login brings it back next login, or reopen it manually.)
+  uninstall quit: "com.outerloop.menubar"
+
   # Never touch ~/Library/Application Support/outerloop — that's the live state
   # store owned by the CLI/daemon (DB, tokens), shared with the formula.
   zap trash: [
