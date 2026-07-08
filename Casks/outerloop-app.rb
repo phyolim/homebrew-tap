@@ -1,11 +1,15 @@
 cask "outerloop-app" do
-  version "0.3.12"
-  sha256 "4756a58c509712b8009a46be4aba18faa6a362784e05d4c4bbdf5873ba4d9d89"
+  version "0.3.13"
+  sha256 "bf09bc785d0bf55909a5d89942a2d12ca4d279924236db91051dba61717a0008"
 
   url "https://github.com/phyolim/outerloop/releases/download/v#{version}/Outerloop-#{version}.zip"
   name "Outerloop"
   desc "Menu-bar control app for the outerloop agent fleet"
   homepage "https://github.com/phyolim/outerloop"
+
+  # The app updates itself (same-team bundle swap needs no App Management TCC
+  # grant, unlike brew moving it from a terminal) — brew upgrade skips it.
+  auto_updates true
 
   depends_on formula: "phyolim/tap/outerloop"
   depends_on macos: :monterey
@@ -33,6 +37,13 @@ cask "outerloop-app" do
   ]
 
   caveats <<~EOS
+    The app updates itself: the menu-bar popover's version footer shows an
+    Update button when a new release is out, so `brew upgrade` skips this cask
+    (auto_updates). If you ever upgrade it via brew anyway (`--greedy`), your
+    terminal needs App Management permission (System Settings → Privacy &
+    Security → App Management) or macOS blocks the swap with "Operation not
+    permitted".
+
     On first launch the app asks whether this Mac is the Hub or a Worker.
     Picking Hub finishes setup by itself: it sets a dashboard password (shown
     once + copied to the clipboard) and starts the daemon — a real LAN hub with
